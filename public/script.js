@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loading.classList.remove('hidden');
         result.classList.add('hidden');
         submitBtn.disabled = true;
-        submitText.textContent = '🤖 DeepSeek AI分析中...';
+        submitText.textContent = '🤖 智启职航-AI分析中...';
         
         // 滚动到加载区域
         loading.scrollIntoView({ behavior: 'smooth' });
