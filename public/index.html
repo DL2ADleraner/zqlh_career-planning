@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青少年职业规划测评</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>青少年职业规划测评</h1>
+        
+        <form id="careerForm">
+            <div class="question-group">
+                <h3>1. 你最喜欢的学科是什么？</h3>
+                <input type="text" name="favorite_subject" placeholder="请输入你最喜欢的学科" required>
+            </div>
+
+            <div class="question-group">
+                <h3>2. 你的兴趣爱好有哪些？</h3>
+                <textarea name="hobbies" placeholder="请详细描述你的兴趣爱好" required></textarea>
+            </div>
+
+            <div class="question-group">
+                <h3>3. 你认为自己最大的优势是什么？</h3>
+                <textarea name="strengths" placeholder="请描述你的优势和特长" required></textarea>
+            </div>
+
+            <div class="question-group">
+                <h3>4. 你理想的工作环境是怎样的？</h3>
+                <select name="work_environment" required>
+                    <option value="">请选择</option>
+                    <option value="office">办公室环境</option>
+                    <option value="outdoor">户外工作</option>
+                    <option value="laboratory">实验室/研究环境</option>
+                    <option value="creative">创意工作室</option>
+                    <option value="social">社交性环境</option>
+                </select>
+            </div>
+
+            <div class="question-group">
+                <h3>5. 你更喜欢哪种工作方式？</h3>
+                <div class="radio-group">
+                    <label><input type="radio" name="work_style" value="team" required> 团队协作</label>
+                    <label><input type="radio" name="work_style" value="independent" required> 独立工作</label>
+                    <label><input type="radio" name="work_style" value="mixed" required> 两者结合</label>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <h3>6. 你对未来收入的期望？</h3>
+                <select name="salary_expectation" required>
+                    <option value="">请选择</option>
+                    <option value="stable">稳定即可</option>
+                    <option value="high">希望高收入</option>
+                    <option value="growth">重视成长潜力</option>
+                </select>
+            </div>
+
+            <div class="question-group">
+                <h3>7. 你愿意为职业发展付出多少努力？</h3>
+                <textarea name="effort_willingness" placeholder="请描述你的学习意愿和努力程度" required></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">获取职业规划建议</button>
+        </form>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>正在分析你的职业潜力...</p>
+        </div>
+
+        <div id="result" class="result hidden">
+            <h2>你的职业规划建议</h2>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
