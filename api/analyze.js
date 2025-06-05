@@ -19,11 +19,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 从环境变量获取API密钥
-    const apiKey = process.env.OPENAI_API_KEY;
+    // 从环境变量获取DeepSeek API密钥
+    const apiKey = process.env.DEEPSEEK_API_KEY;
     
     if (!apiKey) {
-      throw new Error('OpenAI API密钥未配置，请在Vercel环境变量中设置OPENAI_API_KEY');
+      throw new Error('DeepSeek API密钥未配置，请在Vercel环境变量中设置DEEPSEEK_API_KEY');
     }
 
     const data = req.body;
@@ -49,34 +49,42 @@ export default async function handler(req, res) {
 
 请用温暖、鼓励的语调，给出实用且具有指导意义的建议，回复请控制在800字以内。`;
 
-    // 调用OpenAI API
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // 调用DeepSeek API
+    const response = await fetch('https://api.deepseek.com/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'deepseek-chat',  // DeepSeek的模型名称
         messages: [
           {
             role: 'system',
-            content: '你是一位经验丰富的职业规划师，专门为青少年提供职业指导。请用中文回答。'
+            content: '你是一位经验丰富的职业规划师，专门为青少年提供职业指导。请用中文回答，语言要温暖、专业、有指导性。'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        max_tokens: 1200,
-        temperature: 0.7
+        max_tokens: 1500,
+        temperature: 0.7,
+        stream: false
       })
     });
 
     const result = await response.json();
     
     if (!response.ok) {
-      throw new Error(result.error?.message || `API请求失败: ${response.status}`);
+      console.error('DeepSeek API Error:', result);
+      throw new Error(result.error?.message || `API请求失败: ${response.status} - ${result.message || '未知错误'}`);
+    }
+
+    // 检查返回结果格式
+    if (!result.choices || !result.choices[0] || !result.choices[0].message) {
+      console.error('Unexpected API response:', result);
+      throw new Error('API返回格式异常');
     }
 
     // 返回成功结果
@@ -88,9 +96,25 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('API Error:', error);
+    
+    // 更详细的错误处理
+    let errorMessage = '处理请求时出现错误';
+    
+    if (error.message.includes('API密钥')) {
+      errorMessage = 'DeepSeek API密钥配置错误';
+    } else if (error.message.includes('quota') || error.message.includes('limit')) {
+      errorMessage = 'API调用次数已达上限，请稍后重试';
+    } else if (error.message.includes('network') || error.message.includes('fetch')) {
+      errorMessage = '网络连接错误，请检查网络后重试';
+    } else if (error.message.includes('401')) {
+      errorMessage = 'API密钥无效，请检查配置';
+    } else if (error.message.includes('429')) {
+      errorMessage = 'API调用频率过高，请稍后重试';
+    }
+    
     res.status(500).json({
       success: false,
-      error: `处理请求时出现错误: ${error.message}`
+      error: `${errorMessage}: ${error.message}`
     });
   }
 }
