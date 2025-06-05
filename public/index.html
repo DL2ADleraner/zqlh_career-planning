@@ -8,22 +8,23 @@
 </head>
 <body>
     <div class="container">
-        <h1>青少年职业规划测评</h1>
+        <h1>🎯 青少年职业规划测评</h1>
+        <p class="subtitle">通过AI分析，为你的未来职业发展提供个性化建议</p>
         
         <form id="careerForm">
             <div class="question-group">
                 <h3>1. 你最喜欢的学科是什么？</h3>
-                <input type="text" name="favorite_subject" placeholder="请输入你最喜欢的学科" required>
+                <input type="text" name="favorite_subject" placeholder="例如：数学、语文、英语、物理、化学、生物、历史等" required>
             </div>
 
             <div class="question-group">
                 <h3>2. 你的兴趣爱好有哪些？</h3>
-                <textarea name="hobbies" placeholder="请详细描述你的兴趣爱好" required></textarea>
+                <textarea name="hobbies" placeholder="请详细描述你的兴趣爱好，如运动、阅读、绘画、音乐、编程、手工等" required></textarea>
             </div>
 
             <div class="question-group">
                 <h3>3. 你认为自己最大的优势是什么？</h3>
-                <textarea name="strengths" placeholder="请描述你的优势和特长" required></textarea>
+                <textarea name="strengths" placeholder="请描述你的优势和特长，如沟通能力强、逻辑思维好、动手能力强、有创意等" required></textarea>
             </div>
 
             <div class="question-group">
@@ -35,6 +36,7 @@
                     <option value="laboratory">实验室/研究环境</option>
                     <option value="creative">创意工作室</option>
                     <option value="social">社交性环境</option>
+                    <option value="remote">远程工作</option>
                 </select>
             </div>
 
@@ -51,28 +53,32 @@
                 <h3>6. 你对未来收入的期望？</h3>
                 <select name="salary_expectation" required>
                     <option value="">请选择</option>
-                    <option value="stable">稳定即可</option>
-                    <option value="high">希望高收入</option>
-                    <option value="growth">重视成长潜力</option>
+                    <option value="stable">稳定即可，不追求高薪</option>
+                    <option value="high">希望获得高收入</option>
+                    <option value="growth">重视成长潜力和发展前景</option>
+                    <option value="balance">工作生活平衡最重要</option>
                 </select>
             </div>
 
             <div class="question-group">
                 <h3>7. 你愿意为职业发展付出多少努力？</h3>
-                <textarea name="effort_willingness" placeholder="请描述你的学习意愿和努力程度" required></textarea>
+                <textarea name="effort_willingness" placeholder="请描述你的学习意愿和努力程度，如是否愿意加班、学习新技能、接受挑战等" required></textarea>
             </div>
 
-            <button type="submit" id="submitBtn">获取职业规划建议</button>
+            <button type="submit" id="submitBtn">
+                <span id="submitText">🚀 获取职业规划建议</span>
+            </button>
         </form>
 
         <div id="loading" class="loading hidden">
             <div class="spinner"></div>
-            <p>正在分析你的职业潜力...</p>
+            <p>AI正在分析你的职业潜力，请稍等...</p>
         </div>
 
         <div id="result" class="result hidden">
-            <h2>你的职业规划建议</h2>
+            <h2>📋 你的职业规划建议</h2>
             <div id="resultContent"></div>
+            <button id="newTest" class="secondary-btn">重新测试</button>
         </div>
     </div>
 
